@@ -2,6 +2,7 @@ from matching_algorithms.fuzzy_match import fuzzy_match
 from matching_algorithms.tfidf_match import tfidf_match
 from matching_algorithms.embed_match import embed_match
 from util import load_nhanes, clean_text, compute_accuracy
+import os
 
 def main():
     df = load_nhanes()
@@ -62,6 +63,19 @@ def main():
     print(f"Fuzzy Match Accuracy: {acc_fuzzy:.2f}")
     print(f"TF-IDF Match Accuracy: {acc_tfidf:.2f}")
     print(f"Embed Match Accuracy: {acc_embed:.2f}")
+
+    output_lines = [
+        f"Fuzzy Match Accuracy: {acc_fuzzy:.2f}",
+        f"TF-IDF Match Accuracy: {acc_tfidf:.2f}",
+        f"Embed Match Accuracy: {acc_embed:.2f}",
+    ]
+    output_text = "\n".join(output_lines) + "\n"
+
+    os.makedirs("results", exist_ok=True)
+    with open("results/results.txt", "w", encoding="utf-8") as f:
+        f.write(output_text)
+
+    print(output_text)
 
 if __name__ == "__main__":
     main()
